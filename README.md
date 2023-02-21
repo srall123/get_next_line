@@ -15,9 +15,11 @@
 ## 💡 Project
 This project aims to write a function which can return a line read from a file descriptor. You can learn static variables, Input-output system calls and deeper understanding of memory usage and free from this project.
 
-This is an implementation of the get_next_line function in C, which is used for reading a file line by line. It uses a buffer to read data from the file and concatenates it with a temporary string (temp_string, achieved in `gettempstr` & `ft_joint`) until a newline character is found or EOF. The temp_string consists of two parts: the string before first `'\n' `and the `'\n'` as line_string (implemented in `ft_line`) and saves the remaining string in a static variable(staticstr, implemented in `ft_staticstr`) for the next call to the function.
+This is an implementation of the get_next_line function in C, which is used for reading a file line by line. It uses a buffer to read data from the file and concatenates it with a temporary string (temp_string, implement in `gettempstr` & `ft_joint`) until EOF or a newline character is found. The temp_string consists of two parts: line_string and static_string.
 
-The function will return NULL if the following error occurred: 
+In the `ft_line` function, it extracts the string containing the first `'\n'` in the temp_string as the line to be returned. In the `ft_staticstr`, it extracts the string after the first `'\n'` in the temp_string and returns it as the static string for the next call. If the temp_string is empty, they both returns NULL.
+
+The function will return NULL if the following errors occurred: 
 
 - open file failed；
 - read file failed；

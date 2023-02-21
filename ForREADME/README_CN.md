@@ -15,7 +15,7 @@
 ## 💡 项目介绍
 这是42 network 的一个项目，位于New curriculum第二个circle。这是非常重要的一个基础项目，同时也是Exam Rank03的题目。
 
-get_next_line() 函数实现逐行读取文件。大致实现思路为：使用一定大小的缓冲区读取文件，然后将数据连接到一个临时字符串，一直到读取到'\n'或EOF为止。将临时字符串中包含'\n'及之前的字符串返回作为行字符串line，将'\n'后的剩余字符串保存至静态字符串staticstr中，以供下一次调用。
+get_next_line() 函数实现逐行读取文件。大致实现思路为：使用一定大小的缓冲区读取文件，然后将数据连接到一个临时字符串(``gettempstr` & `ft_joint``)，一直到读取到'\n'或EOF为止。将临时字符串中包含'\n'及之前的字符串返回作为行字符串line(`ft_line()`)，将'\n'后的剩余字符串保存至静态字符串staticstr(`ft_staticstr()`)，以供下一次调用。
 
 项目主题: [get_next_line_subject_en.pdf ](../en.subject.pdf)
 ## 🧰 使用方法
