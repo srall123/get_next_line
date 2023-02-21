@@ -32,6 +32,7 @@ Using `cc` compiler to compile your source files with `-Werror -Wall -Wextra` fl
 
 ```SHELL
 git clone https://github.com/srall123/get_next_line.git
+
 cc -Werror -Wextra -Wall -D BUFFER_SIZE=n get_next_line.c get_next_line_utils.c main.c && ./a.out
 ```
   
@@ -42,7 +43,9 @@ cc -Werror -Wextra -Wall -D BUFFER_SIZE=n get_next_line.c get_next_line_utils.c 
 ## 🛡️ Tester
 Third party tester to fully test the project, thanks to contributor:
 [Tripouille/gnlTester](https://github.com/Tripouille/gnlTester) `git clone https://github.com/Tripouille/gnlTester.git`
+
 <b>The test result of mandatory and bonus:</b>
+
 <img style="vertical-align: top;" decoding="async" src="./ForREADME/test_result.png" width="50%"><img style="vertical-align: top;" decoding="async" src="./ForREADME/test_result_bonus.png" width="50%">
 
 ## ✔︎Moulinette
