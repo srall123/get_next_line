@@ -1,67 +1,49 @@
 <h1 align="center">
-	📚👨🏻‍💻𝟒𝟮  Cursus: get_next_line
+	📚👨🏻‍💻<i>42_Cursus: </i>get_next_line
 </h1>
 
+<p align="center">
+	<img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/srall123/get_next_line?color=lightblue&style=plastic&logo=42" />
+	<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/srall123/get_next_line?color=green&label=C%20language&logo=42&style=plastic" />
+	<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/srall123/get_next_line?color=critical&logo=42&style=plastic" />
+</p>
+<p align="center">
+	<a href="./README.md">English &nbsp;&nbsp;</a>
+	<a href="./ForREADME/README_CN.md"> 简体中文 &nbsp;&nbsp; </a>
+</p><hr>
 
-这是42 network 的一个项目，位于New curriculum第二个circle。项目能帮助你进一步理解内存的使用和释放，是非常重要的一个基础项目，同时也是Exam Rank03的题目。
+## 💡 Project
+This project aims to write a function which can return a line read from a file descriptor. You can learn static variables, Input-output system calls and deeper understanding of memory usage and free from this project.
 
-get_next_line() 实现了 C 语言中读取文件逐行的函数。该函数使用缓冲区读取文件数据，然后连接临时字符串，直到找到换行符为止。一旦找到换行符，函数返回已读取的行，并将剩余的字符串保存在静态变量中以供下一次调用该函数使用。
-get_next_line 是一个 C 语言函数，用于从文件中逐行读取数据。该函数接收一个文件描述符作为参数，返回读取的数据行。
+This is an implementation of the get_next_line function in C, which is used for reading a file line by line. It uses a buffer to read data from the file and concatenates it with a temporary string (temp_string, achieved in `gettempstr` & `ft_joint`) until a newline character is found or EOF. The temp_string consists of two parts: the string before first `'\n' `and the `'\n'` as line_string (implemented in `ft_line`) and saves the remaining string in a static variable(staticstr, implemented in `ft_staticstr`) for the next call to the function.
 
-该函数的实现使用缓冲区从文件中读取数据，并将其与临时字符串连接起来，直到找到换行符为止。一旦找到换行符，它返回已读取的行，并将剩余的字符串保存在静态变量中以供下一次调用该函数使用。
+The function will return NULL if the following error occurred: 
 
-特点
-逐行读取数据
-高效，使用缓冲区读取数据
-可以处理包含多个换行符的行
+- open file failed；
+- read file failed；
+- Memory allocated failed；
+  
+For more details: [See this Subject ](./en.subject.pdf)
 
-## 使用方法
-将 `get_next_line.c` 文件拷贝到您的项目中。
-在您的代码中包含 get_next_line.h 头文件。
-使用 get_next_line(fd) 函数从文件中读取数据。fd 是打开的文件描述符。
+## 🧰 Usage
+Using `cc` compiler to compile your source files with `-Werror -Wall -Wextra` flags. In addition, you have to handle the different buffer size, add the `-D BUFFER_SIZE=n` to your compiler call. 
 
-## 函数原型
-``char	*get_next_line(int fd);``
-参数 fd 是要读取的文件的描述符。
-返回值是读取的数据行。如果读取结束，返回 NULL。
+```SHELL
+git clone https://github.com/srall123/get_next_line.git
+cc -Werror -Wextra -Wall -D BUFFER_SIZE=n get_next_line.c get_next_line_utils.c main.c && ./a.out
+```
+  
+## 🔍 Note
+- No Norm checking;
+- Comments in the source files, ignore the chinese comments;
 
-## 函数详解
-``int nl_include(const char *s)``
-该函数检查字符串 s 是否包含换行符。
+## 🛡️ Tester
+Third party tester to fully test the project, thanks to contributor:
+[Tripouille/gnlTester](https://github.com/Tripouille/gnlTester) `git clone https://github.com/Tripouille/gnlTester.git`
+<b>The test result of mandatory and bonus:</b>
+<img style="vertical-align: top;" decoding="async" src="./ForREADME/test_result.png" width="50%"><img style="vertical-align: top;" decoding="async" src="./ForREADME/test_result_bonus.png" width="50%">
 
-``char *ft_joint(char *temp, char *buf)``
-该函数连接两个字符串 temp 和 buf 并返回连接后的结果。
-
-``char *ft_line(char *temp)``
-该函数返回从字符串 temp 中读取的一行数据。如果 temp 中没有换行符，则返回 NULL。
-
-``char *ft_staticstr(char *temp)``
-该函数返回从字符串 temp 中剩余的数据。如果 temp 中没有剩余数据，则返回 NULL。
-
-``static char *gettempstr(int fd, char *buff, char *staticstr)``
-该函数从文件中读取数据，并连接临时字符串，直到找到换行符为止。它返回已读取的字符串。
-
-``char *get_next_line(int fd)``
-该函数使用 gettempstr 函数从文件中读取数据，并使用 ft_line 和 ft_staticstr 函数返回已读取的行和剩余的数据。
-
-## 错误处理
-如果发生以下任何情况，则 get_next_line 函数将返回 NULL：
-
-- 打开文件时发生错误。
-- 读取文件时发生错误。
-- 内存分配失败。
-
-## 注意事项
-- 函数仅适用于 UNIX 和 macOS 系统。
-- 函数仅适用于文本文件。
-g -et_next_line 函数的第二个参数应该是 \n 符号。
-## 原理
-该实现使用缓冲区从文件中读取数据，并将其与临时字符串连接起来，直到找到换行符为止。一旦找到换行符，它返回已读取的行，并将剩余的字符串保存在静态变量中以供下一次调用该函数使用。
-
-该实现包括一些错误检查，例如检查文件描述符是否有效，缓冲区大小是否大于0，以及读取函数是否返回有效值。它还包括一些实用函数，例如 nl_include，它检查字符串是否包含换行符，以及 ft_joint，它连接两个字符串。
-
-
-## tester
-
-
-
+## ✔︎Moulinette
+<p align="center">
+<img decoding="async" src="./ForREADME/score.png" width="40%">
+</p>

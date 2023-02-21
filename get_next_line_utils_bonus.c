@@ -1,19 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: srall <srall@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 21:05:42 by srall             #+#    #+#             */
-/*   Updated: 2023/02/21 03:14:40 by srall            ###   ########.fr       */
+/*   Updated: 2023/02/21 03:11:35 by srall            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
-// 检查缓冲区buff中是否包含'\n'，用于结束读区的循环。
-// cCheck if the buffer buff contains '\n', for ending the reading loop.
 int		nl_include(const char *s)
 {
 	if (!s)
@@ -26,8 +24,6 @@ int		nl_include(const char *s)
 	return 0;
 }
 
-// 连接两个输入参数串；
-// joint two strings as argumens
 char	*ft_joint(char *temp, char *buf)
 {
 	char	*res = NULL;
@@ -45,28 +41,25 @@ char	*ft_joint(char *temp, char *buf)
 	i = 0, j = 0, len = 0;
 	while (temp[i])
 		res[len++] = temp[i++];
-	free(temp); // assign NULL after free, invalid. subfunction inner.
+	free(temp);
 	while (buf[j])
 		res[len++] = buf[j++];
 	res[len] = '\0';
 	return (res);
 }
 
-// 返回连接后的临时串，将储存在staticstr的静态串或连接之后的临时串temp与buff缓存串连接
-// The function concatenates a static string or a temporary string with the buffer string,
-//  and returns the concatenated string.
 char	*gettempstr(int fd, char *buff, char *staticstr)
 {
 	char	*temp = NULL;
 	int		num_read = BUFFER_SIZE;
 
-	if (!staticstr) // In order to avoid segmentation fault when the first read.
+	if (!staticstr)
 	{
 		if (!(temp = (char *)malloc(sizeof(char) * 1)))
 			return (NULL);
 		temp[0] = '\0';
 	}
-	while (num_read == BUFFER_SIZE && !nl_include(buff)) // num_read == BUFFER_SIZE, EOF for breaking out the loop
+	while (num_read == BUFFER_SIZE && !nl_include(buff))
 	{
 		if ((num_read = read(fd, buff, BUFFER_SIZE)) < 0)
 			return (NULL);
@@ -76,25 +69,14 @@ char	*gettempstr(int fd, char *buff, char *staticstr)
 		else
 		{
 			temp = ft_joint(staticstr, buff);
-			// staticstr is not NULL，free in ft_joint, then NULL in here.
-			// otherwise every loop joint the staticstr&buff, then double free error ocurred in ft_joint.
-			// staticstr不为空，连接后就free，立即在ft_joint的外部赋NULL，否则每次都是staticstr和buff的连接，ft_joint会导致double free出错；
-			// 出错原因：赋NULL应在这个函数执行，在ft_joint函数内部赋NULL无效；
-			// 注意：其实在ft_joint函数内部的free其实是多余的，因为static char*类型储存在静态储存区无需显式free。
 			staticstr = NULL;
 		}
-		// 公用ft_joint函数，只在第一次循环连接staticstr和buff，free NULL之后的循环都是temp的buff，很巧妙。
-		// The shared ft_joint function only concatenates staticstr and buff in the first loop.
-		// In the subsequent loops, it concatenates temp and buff.
-		if (!temp) // protect, ft_joint malloc failed
+		if (!temp)
 			return (NULL);
 	}
 	return (temp);
 }
 
-// 提取临时串中包含第一个'\n'前的字符串作为行串返回，若临时串无数据则返回NULL。
-// Extracts the string containing the first '\n' in the temporary string as the line string to be returned.
-// Returns NULL if the temporary string is empty.
 char	*ft_line(char *temp)
 {
 	char	*line = NULL;
@@ -104,7 +86,7 @@ char	*ft_line(char *temp)
 		return (NULL);
 	while (temp[i])
 	{
-		if (temp[i++] == '\n') // If it is '\n', make sure to allocate one more;
+		if (temp[i++] == '\n')
 			break ;
 	}
 	line = (char *)malloc(sizeof(char) * (i + 1));
@@ -122,9 +104,6 @@ char	*ft_line(char *temp)
 	return (line);
 }
 
-// 提取临时串中第一个'\n'后的字符串作为静态串返回，若临时串无数据则返回NULL。
-// Extracts the string after the first occurrence of '\n' in the temporary string and returns it as the static string.
-// If the temporary string is empty, it returns NULL.
 char	*ft_staticstr(char *temp)
 {
 	char	*staticstr = NULL;
